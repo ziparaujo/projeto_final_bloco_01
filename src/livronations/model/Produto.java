@@ -63,7 +63,7 @@ public abstract class Produto {
 		
 		System.out.printf("\n"
 				+ "Id: %d\n"
-				+ "Tipo: %d\n"
+				+ "Tipo: %s\n"
 				+ "Titulo: %s\n"
 				+ "Autor: %s\n"
 				+ "Quantidade de páginas: %d\n",

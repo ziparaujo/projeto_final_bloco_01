@@ -116,11 +116,12 @@ public class Menu {
 		if(busca != null) {
 			var tipoLivro = busca.getTipo();
 			
-			System.out.printf("\nCadastro de livro!");
+			System.out.printf("\nAtualização de livro!");
 			System.out.printf("\nTítulo: ");
-			String titulo = sc.next();
+			String titulo = sc.nextLine();
+			sc.skip("\\R?");
 			System.out.printf("Nome do autor: ");
-			String autor = sc.next();
+			String autor = sc.nextLine();
 			System.out.printf("Quantidade de páginas: ");
 			int quantidadePaginas = sc.nextInt();
 			

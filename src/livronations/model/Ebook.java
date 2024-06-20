@@ -24,6 +24,6 @@ public class Ebook extends Produto {
 		formato = (this.formato == 1) ? "EPUB" : (this.formato == 2) ? "PDF" : "Formato não identificado.";
 		
 		super.listarProdutos();
-		System.out.printf("\nFormato do ebook: %s", formato);
+		System.out.printf("Formato do ebook: %s\n\n", formato);
 	}
 }
