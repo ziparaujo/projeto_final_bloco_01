@@ -9,18 +9,25 @@ import livronations.model.LivroFisico;
 
 public class Menu {
 	static ProdutoController produtos = new ProdutoController();
+	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		
-		Scanner sc = new Scanner(System.in);
 		int choice = 0;
 		
 		while (true) {
 			
-			exibirMenu();
+			System.out.println("1 - Criar produto");
+			System.out.println("2 - Listar todos os produtos");
+			System.out.println("3 - Atualizar produto");
+			System.out.println("4 - Excluir produto");
+			System.out.println("5 - Sobre");
+			System.out.println("6 - Sair");
+			System.out.println("Digite a opção desejada: ");
 			
 			try {
 				choice = sc.nextInt();
+				sc.skip("\\R?");
 			} catch (InputMismatchException e) {
 				System.out.println("\nDigite valores inteiros.");
 				sc.nextLine();
@@ -32,7 +39,7 @@ public class Menu {
 				criarProduto();
 				break;
 			case 2:
-				listarProdutos();
+				produtos.listar();
 				break;
 			case 3:
 				atualizarProduto();
@@ -53,27 +60,19 @@ public class Menu {
 		
 	}
 
-	public static void exibirMenu() {
-		System.out.println("1 - Criar produto");
-		System.out.println("2 - Listar todos os produtos");
-		System.out.println("3 - Atualizar produto");
-		System.out.println("4 - Excluir produto");
-		System.out.println("5 - Sobre");
-		System.out.println("6 - Sair");
-		System.out.println("Digite a opção desejada: ");
-	}
-
 	private static void criarProduto() {
 		int tipoLivro, tipoCapa, formato;
 		
-		Scanner sc = new Scanner(System.in);
 		System.out.printf("\nCadastro de livro!");
 		System.out.printf("\nTítulo: ");
 		String titulo = sc.next();
+		sc.skip("\\R?");
 		System.out.printf("Nome do autor: ");
 		String autor = sc.next();
+		sc.skip("\\R?");
 		System.out.printf("Quantidade de páginas: ");
 		int quantidadePaginas = sc.nextInt();
+		sc.skip("\\R?");
 		
 		do {
 			System.out.printf("Tipo (1 - Livro físico ou 2 - Ebook): ");
@@ -95,26 +94,55 @@ public class Menu {
 					System.out.printf("Formato do livro (1 - EPUB ou 2 - PDF): ");
 					formato = sc.nextInt();
 				} while(formato != 1 && formato !=2);
-				produtos.cadastrar(new Ebook(quantidadePaginas, quantidadePaginas, tipoLivro, titulo, autor, formato));
+				produtos.cadastrar(new Ebook(produtos.gerarId(), quantidadePaginas, tipoLivro, titulo, autor, formato));
 			}
 		}
 	}
 	
-	private static void listarProdutos() {
-		// TODO Auto-generated method stub
-		System.out.println("Listar produtos...");
-
-	}
-	
 	private static void exluirProduto() {
-		// TODO Auto-generated method stub
-		System.out.println("Excluir produto...");
+		System.out.println("Digite o id do livro: ");
+		int id = sc.nextInt();
+		
+		produtos.deletar(id);
 	}
 
 	private static void atualizarProduto() {
-		// TODO Auto-generated method stub
-		System.out.println("Atualizar produto...");
+		int tipoCapa, formato;
+		System.out.println("Digite o id do livro: ");
+		int id = sc.nextInt();
 		
+		var busca = produtos.buscar(id);
+		
+		if(busca != null) {
+			var tipoLivro = busca.getTipo();
+			
+			System.out.printf("\nCadastro de livro!");
+			System.out.printf("\nTítulo: ");
+			String titulo = sc.next();
+			System.out.printf("Nome do autor: ");
+			String autor = sc.next();
+			System.out.printf("Quantidade de páginas: ");
+			int quantidadePaginas = sc.nextInt();
+			
+			switch(tipoLivro) {
+				case 1 -> {
+					do {
+						System.out.printf("Tipo de capa (1 - Capa comum ou 2 - Capa dura): ");
+						tipoCapa = sc.nextInt();
+					} while(tipoLivro != 1 && tipoLivro != 2);
+					System.out.printf("Custo de envio (R$): ");
+					float custoEnvio = sc.nextFloat();
+					produtos.cadastrar(new LivroFisico(produtos.gerarId(), quantidadePaginas, tipoLivro, titulo, autor, custoEnvio, tipoCapa));
+				}
+				case 2 -> {
+					do {
+						System.out.printf("Formato do livro (1 - EPUB ou 2 - PDF): ");
+						formato = sc.nextInt();
+					} while(formato != 1 && formato !=2);
+					produtos.cadastrar(new Ebook(produtos.gerarId(), quantidadePaginas, tipoLivro, titulo, autor, formato));
+				}
+			}
+		}
 	}
 	
 	public static void sobre() {
