@@ -62,9 +62,9 @@ public class Menu {
 		
 	}
 	
-	private static String listarProdutos() {
+	private static void listarProdutos() {
 		// TODO Auto-generated method stub
-		return null;
+
 	}
 	
 	private static void exluirProduto() {
