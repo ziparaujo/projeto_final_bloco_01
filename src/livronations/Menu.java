@@ -1,4 +1,4 @@
-package produtos;
+package livronations;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -78,7 +78,7 @@ public class Menu {
 	}
 	
 	public static void sobre() {
-		System.out.println("\nLIVRONATION®\n");
+		System.out.println("\nLIVRONATIONS®\n");
 		System.out.println("Projeto desenvolvido por: ");
 		System.out.println("Rodrigo Araujo - ziparaujo@gmail.com");
 		System.out.println("github.com/ziparaujo\n\n");
